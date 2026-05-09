@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ZeldaClone")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+05e18fa34416b1aa2965364aff7e02fb95abf325")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+560fed35b2cbc9c4896a9d3f0267b81b048243aa")]
 [assembly: System.Reflection.AssemblyProductAttribute("ZeldaClone")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ZeldaClone")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

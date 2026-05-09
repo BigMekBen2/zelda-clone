@@ -12,6 +12,7 @@ class Editor
     bool enemyMode = false;
     string roomDir;
 
+    const int Scale = 5;
     const int PaletteX = Tiles.Cols * Tiles.Size + 4;
     const int WinW = Tiles.Cols * Tiles.Size + 120;
     const int WinH = Tiles.Rows * Tiles.Size + 24;
@@ -57,21 +58,33 @@ class Editor
 
     public void Run()
     {
-        Raylib.InitWindow(WinW, WinH + 20, "Zelda Editor");
+        Raylib.InitWindow(WinW * Scale, WinH * Scale, "Zelda Editor");
         Raylib.SetTargetFPS(60);
+
+        var rt = Raylib.LoadRenderTexture(WinW, WinH);
 
         while (!Raylib.WindowShouldClose())
         {
-            Update();
-            Raylib.BeginDrawing();
+            UpdateInput();
+            Raylib.BeginTextureMode(rt);
             Raylib.ClearBackground(new Color(15, 12, 8, 255));
             Draw();
+            Raylib.EndTextureMode();
+
+            Raylib.BeginDrawing();
+            Raylib.DrawTexturePro(
+                rt.Texture,
+                new Rectangle(0, 0, WinW, -WinH),
+                new Rectangle(0, 0, WinW * Scale, WinH * Scale),
+                System.Numerics.Vector2.Zero, 0, Color.White);
             Raylib.EndDrawing();
         }
+
+        Raylib.UnloadRenderTexture(rt);
         Raylib.CloseWindow();
     }
 
-    void Update()
+    void UpdateInput()
     {
         // switch mode
         if (Raylib.IsKeyPressed(KeyboardKey.E)) enemyMode = !enemyMode;
@@ -88,7 +101,8 @@ class Editor
         if (Raylib.IsKeyPressed(KeyboardKey.S) && Raylib.IsKeyDown(KeyboardKey.LeftControl))
             SaveAll();
 
-        var mouse = Raylib.GetMousePosition();
+        var rawMouse = Raylib.GetMousePosition();
+        var mouse = rawMouse / Scale;
         int mc = (int)(mouse.X / Tiles.Size);
         int mr = (int)(mouse.Y / Tiles.Size);
         bool inGrid = mc >= 0 && mc < Tiles.Cols && mr >= 0 && mr < Tiles.Rows;
