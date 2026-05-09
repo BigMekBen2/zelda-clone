@@ -1,13 +1,18 @@
 ﻿using ZeldaClone;
 
-string roomDir = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "rooms");
-Directory.CreateDirectory(roomDir);
+try
+{
+    string roomDir = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "rooms");
+    Directory.CreateDirectory(roomDir);
+    Console.WriteLine($"Room dir: {Path.GetFullPath(roomDir)}");
 
-if (args.Length > 0 && args[0] == "--editor")
-{
-    new Editor(roomDir).Run();
+    if (args.Length > 0 && args[0] == "--editor")
+        new Editor(roomDir).Run();
+    else
+        new Game().Run(roomDir);
 }
-else
+catch (Exception ex)
 {
-    new Game().Run(roomDir);
+    Console.WriteLine($"CRASH: {ex}");
+    Console.ReadLine();
 }
