@@ -7,3 +7,7 @@
 - [ ] Sound effects (sword, arrow, hit, pickup, door) and background music
 - [ ] Player sprite that looks human — head, body, legs, directional facing
 - [ ] Wall tiles: multi-toned, simulated beveled edges, medium-dark grey-blue (not solid black)
+- [ ] Zelda-style room scroll transition — screen freezes briefly then scrolls to new room
+- [ ] NPC rooms — old man style, text dialog, no combat
+- [ ] Boss monster room
+- [ ] MacGuffin room — behind boss, holds the win item
