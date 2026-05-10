@@ -8,6 +8,7 @@ class Dungeon
     public int Current = 0;
     public List<Enemy> Enemies = [];
     public List<Arrow> Arrows = [];
+    public List<Pickup> Pickups = [];
 
     float transTimer = 0;
     const float TransDur = 0.3f;
@@ -37,7 +38,12 @@ class Dungeon
         if (transTimer > 0) { transTimer -= dt; return; }
 
         foreach (var e in Enemies) e.Update(dt, ActiveRoom, player, Arrows);
+        foreach (var e in Enemies.Where(e => e.Dead && e.Drop.HasValue))
+            Pickups.Add(new Pickup(e.Pos, e.Drop!.Value));
         Enemies.RemoveAll(e => e.Dead);
+
+        foreach (var p in Pickups) p.Update(dt, player);
+        Pickups.RemoveAll(p => p.Collected);
 
         foreach (var a in Arrows) a.Update(dt, ActiveRoom);
         Arrows.RemoveAll(a => a.Dead);
@@ -111,6 +117,7 @@ class Dungeon
         Current = idx;
         SpawnEnemies();
         Arrows.Clear();
+        Pickups.Clear();
         transTimer = TransDur;
         transDir = fromDir;
     }
@@ -118,6 +125,7 @@ class Dungeon
     public void Draw(Player player)
     {
         ActiveRoom.Draw();
+        foreach (var p in Pickups) p.Draw();
         foreach (var e in Enemies) e.Draw();
         foreach (var a in Arrows) a.Draw();
         player.Draw();

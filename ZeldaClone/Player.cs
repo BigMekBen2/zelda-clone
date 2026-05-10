@@ -10,6 +10,7 @@ class Player
     public int Hearts = 6;
     public int MaxHearts = 6;
     public int Arrows = 10;
+    public int Coins = 0;
     public bool HasBow = true;
 
     float invTimer = 0f;

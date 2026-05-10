@@ -17,7 +17,8 @@ static class HUD
             var c = i < p.Hearts ? Heart : Empty;
             Raylib.DrawRectangle(4 + i * 12, HudY, 10, 10, c);
         }
-        // arrow count
-        Raylib.DrawText($">{p.Arrows}", 4 + p.MaxHearts * 12 + 8, HudY, 10, ArrowColor);
+        int arrowX = 4 + p.MaxHearts * 12 + 8;
+        Raylib.DrawText($">{p.Arrows}", arrowX, HudY, 10, ArrowColor);
+        Raylib.DrawText($"${p.Coins}", arrowX + 36, HudY, 10, new Color(220, 185, 30, 255));
     }
 }
