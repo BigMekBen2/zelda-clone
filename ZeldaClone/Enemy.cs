@@ -19,7 +19,7 @@ abstract class Enemy
     {
         Pos = new Vector2(col * Tiles.Size + Tiles.Size / 2f, row * Tiles.Size + Tiles.Size / 2f);
         Health = hp;
-        Drop = drop ?? (Rng.NextDouble() < 0.4 ? (PickupType?)RandomDrop() : null);
+        Drop = drop ?? (Rng.NextDouble() < 0.7 ? (PickupType?)RandomDrop() : null);
     }
 
     static PickupType RandomDrop()
@@ -91,19 +91,20 @@ class Blob : Enemy
 
     public override void Draw()
     {
-        // outer square pulses on X
+        // bottom body pulses width
         float px = MathF.Sin(animTimer * 4f) * 2f;
-        // inner square pulses on Y (offset phase)
-        float py = MathF.Sin(animTimer * 4f + 1.5f) * 2f;
+        // top bubble pulses height (protrudes upward)
+        float py = MathF.Sin(animTimer * 4f + 1.5f) * 1.5f;
 
-        int ow = (int)(12 + px), oh = 10;
-        int iw = 7, ih = (int)(7 + py);
+        int bw = (int)(13 + px), bh = 9;   // body: wide, short
+        int tw = 7, th = (int)(6 + py);     // top bubble: narrow, taller
 
-        var outer = new Color(60, 180, 60, 255);
-        var inner = new Color(120, 230, 100, 255);
+        var c = new Color(60, 190, 60, 255);
 
-        Rect(-ow / 2, -oh / 2, ow, oh, outer);
-        Rect(-iw / 2, -ih / 2, iw, ih, inner);
+        // body centered
+        Rect(-bw / 2, -bh / 2 + 2, bw, bh, c);
+        // bubble protrudes from top center
+        Rect(-tw / 2, -bh / 2 + 2 - th + 1, tw, th, c);
     }
 }
 

@@ -38,12 +38,6 @@ class Dungeon
         if (transTimer > 0) { transTimer -= dt; return; }
 
         foreach (var e in Enemies) e.Update(dt, ActiveRoom, player, Arrows);
-        foreach (var e in Enemies.Where(e => e.Dead && e.Drop.HasValue))
-            Pickups.Add(new Pickup(e.Pos, e.Drop!.Value));
-        Enemies.RemoveAll(e => e.Dead);
-
-        foreach (var p in Pickups) p.Update(dt, player);
-        Pickups.RemoveAll(p => p.Collected);
 
         foreach (var a in Arrows) a.Update(dt, ActiveRoom);
         Arrows.RemoveAll(a => a.Dead);
@@ -76,6 +70,14 @@ class Dungeon
                 if (hb.IntersectsWith(sr)) e.Hit(2);
             }
         }
+
+        // drop pickups after all combat resolved
+        foreach (var e in Enemies.Where(e => e.Dead && e.Drop.HasValue))
+            Pickups.Add(new Pickup(e.Pos, e.Drop!.Value));
+        Enemies.RemoveAll(e => e.Dead);
+
+        foreach (var p in Pickups) p.Update(dt, player);
+        Pickups.RemoveAll(p => p.Collected);
 
         CheckTransition(player);
     }
