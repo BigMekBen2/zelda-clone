@@ -28,7 +28,8 @@ class Game
 
             Raylib.BeginTextureMode(rt);
             Raylib.ClearBackground(new Color(15, 12, 8, 255));
-            dungeon.Draw(player);
+            dungeon.Draw();
+            player.Draw();
             HUD.Draw(player);
             Raylib.EndTextureMode();
 
