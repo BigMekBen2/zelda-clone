@@ -124,7 +124,10 @@ class Editor
                 if (Raylib.IsMouseButtonDown(MouseButton.Left))
                     rooms[current].Set(mc, mr, selected);
                 if (Raylib.IsMouseButtonDown(MouseButton.Right))
+                {
                     rooms[current].Set(mc, mr, TileType.Floor);
+                    rooms[current].Spawns.RemoveAll(s => s.Col == mc && s.Row == mr);
+                }
             }
         }
         else
