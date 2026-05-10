@@ -124,13 +124,12 @@ class Dungeon
         transDir = fromDir;
     }
 
-    public void Draw(Player player)
+    public void Draw()
     {
         ActiveRoom.Draw();
         foreach (var p in Pickups) p.Draw();
         foreach (var e in Enemies) e.Draw();
         foreach (var a in Arrows) a.Draw();
-        player.Draw();
 
         if (transTimer > 0)
         {
